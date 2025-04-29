@@ -1,3 +1,16 @@
 .venv
 *.csv
 *.png
+/target
+*.pid
+__pycache__
+marble_client_records.csv
+output_images
+pylsp.log
+proto/__pycache__
+raw_screens
+raw_screens_*
+output_images_*
+marble_client_records_*.csv
+./teams
+.idea
