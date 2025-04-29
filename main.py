@@ -1,11 +1,11 @@
 import logging
 import util
-import marble_client
 import click
 import subprocess
 from typing import Optional
 from concurrent.futures import ProcessPoolExecutor
-
+from clients.ForwardMarbleClient import ForwardMarbleClient
+from clients.SafetySpeedMarbleClient import SafetySpeedMarbleClient
 
 # Import the generated modules
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(processName)s - %(levelname)s - %(message)s')
@@ -46,9 +46,20 @@ def run(no_server: bool, clients: int, game_seconds: int, seed: int, server_head
 def run_client(args: (int, int)) -> Optional[subprocess.Popen]:
     client_id, seed = args
     name = 'A' + str(client_id)
-    client = util.start_client_process(4000, '127.0.0.1', 5001 + client_id, name, 50051 + client_id, seed, False)
 
-    bot = marble_client.MarbleClient('localhost', str(50051 + client_id), 'raw_screens_' + str(client_id), name)
+    client = util.start_client_process(4000, '127.0.0.1', 5001 + client_id, name, 50051 + client_id, seed, False)
+    if (client_id % 6) == 0:
+        bot = ForwardMarbleClient('localhost', str(50051 + client_id), 'raw_screens_' + str(client_id), name)
+    if (client_id % 6) == 1:
+        bot = ForwardMarbleClient('localhost', str(50051 + client_id), 'raw_screens_' + str(client_id), name)
+    if (client_id % 6) == 2:
+        bot = SafetySpeedMarbleClient('localhost', str(50051 + client_id), 'raw_screens_' + str(client_id), name, v_max=12.0)
+    if (client_id % 6) == 3:
+        bot = SafetySpeedMarbleClient('localhost', str(50051 + client_id), 'raw_screens_' + str(client_id), name, v_max=14.0)
+    if (client_id % 6) == 4:
+        bot = SafetySpeedMarbleClient('localhost', str(50051 + client_id), 'raw_screens_' + str(client_id), name, v_max=16.0)
+    if (client_id % 6) == 5:
+        bot = SafetySpeedMarbleClient('localhost', str(50051 + client_id), 'raw_screens_' + str(client_id), name, v_max=18.0)
     try:
         bot.run_interaction_loop()
     finally:
