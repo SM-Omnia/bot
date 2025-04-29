@@ -1,0 +1,32 @@
+[project]
+name = "bot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.11.11"
+dependencies = [
+    "click>=8.1.8",
+    "grpcio>=1.71.0",
+    "grpcio-tools>=1.71.0",
+    "matplotlib>=3.10.1",
+    "numpy",
+    "opencv-python>=4.11.0.86",
+    "pandas>=2.2.3",
+    "pillow",
+    "pyarrow>=20.0.0",
+    "pyyaml>=6.0.2",
+    "scikit-image>=0.25.2",
+    "scikit-learn>=1.6.1",
+    "scipy>=1.15.2",
+    "segment-anything>=1.0",
+    "torch",
+    "torchvision",
+    "tqdm",
+]
+[[tool.uv.index]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/rocm6.0"
+
+[tool.uv.sources]
+torch = { index = "pytorch" }
+torchvision = { index = "pytorch" }
